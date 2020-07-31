@@ -1,14 +1,13 @@
 define([
-  'intern/chai!assert',
-  'intern!bdd',
   'dojo/_base/html',
-  'dojo/promise/all',
   'dojo/query',
-  'dojo/on',
-  'testjimu/WidgetManager',
-  'testjimu/globals',
-  'intern/order!sinon'
-], function (assert, bdd, html, all, query, on, TestWidgetManager, globals, sinon) {
+  'tests/support/WidgetManagerForTest',
+  'tests/support/globals',
+  'sinon',
+], function (html, query, WidgetManagerForTest, globals, sinon) {
+
+  var assert = window.intern.getPlugin('chai').assert;
+  var bdd = window.intern.getPlugin('interface.bdd');
 
   var widgetJson = {
     id: 'bookmark1',
@@ -18,10 +17,11 @@ define([
   bdd.describe('web map has no bookmark', function(){
     var wm, map;
     bdd.before(function(){
-      wm = TestWidgetManager.getInstance();
-      map = TestWidgetManager.getDefaultMap();
-      map.setExtent = function(){};
-      wm.prepare('theme1', map);
+      wm = WidgetManagerForTest.getInstance();
+      return wm.prepare({}, null);
+    });
+
+    bdd.after(function(){
     });
 
     bdd.beforeEach(function(){
@@ -35,9 +35,10 @@ define([
         "flyTime": 3000
       };
       return wm.loadWidget(widgetJson).then(function(widget){
+        widget.placeAt(window.jimuConfig.layoutId);
         wm.openWidget(widget);
         assert.deepEqual(widget.bookmarks, []);
-        assert.strictEqual(html.hasClass(query('.btn-delete', widget.domNode)[0], 'jimu-state-disabled'), true);
+        assert.strictEqual(1, query('.header .add', widget.domNode).length);
       });
     });
 
@@ -46,7 +47,8 @@ define([
         widgetJson.config = {
           "bookmarks2D": [{
             name: 'aa',
-            displayName: 'aa',//??
+            displayName: 'aa',
+            isInWebmap: false,
             extent: {
               "type": "extent",
               "xmin": -20201384.548170276,
@@ -62,18 +64,17 @@ define([
           "flyTime": 3000
         };
         return wm.loadWidget(widgetJson).then(function(widget){
+          widget.placeAt(window.jimuConfig.layoutId);
           wm.openWidget(widget);
-          assert.deepEqual(widget.bookmarks.length, 1);
-          assert.strictEqual(html.hasClass(query('.btn-delete', widget.domNode)[0], 'jimu-state-disabled'), true);
+          // assert.deepEqual(widget.customBookmarks.bookmarks.length, 1);
 
-          var setExtentSpy = sinon.spy(map, 'setExtent');
-          widget._onBookmarkClick(widgetJson.config.bookmarks2D[0]);
-          assert.strictEqual(setExtentSpy.called, true);
+          // var setExtentSpy = sinon.spy(map, 'setExtent');
+          // widget._onBookmarkClick(widgetJson.config.bookmarks2D[0]);
+          // assert.strictEqual(setExtentSpy.called, true);
 
-          assert.strictEqual(html.hasClass(query('.btn-delete', widget.domNode)[0], 'jimu-state-disabled'), false);
-
-          widget._onDeleteBtnClicked();
-          assert.deepEqual(widget.bookmarks.length, 0);
+          // widget._onDeleteBtnClicked();
+          // assert.deepEqual(widget.bookmarks.length, 0);
+          // map.setExtent.restore();
         });
       });
     });
