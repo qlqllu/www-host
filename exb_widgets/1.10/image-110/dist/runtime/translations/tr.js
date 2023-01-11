@@ -1,5 +1,1 @@
-define({
-  _widgetLabel: 'Görüntü',
-  imageChooseShape: 'Şekil',
-  imageCrop: 'Kes'
-});
+System.register([],(function(e){return{execute:function(){e({_widgetLabel:"Görüntü",imageChooseShape:"Şekil",imageCrop:"Kes"})}}}));

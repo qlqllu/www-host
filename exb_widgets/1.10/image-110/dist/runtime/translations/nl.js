@@ -1,5 +1,1 @@
-define({
-  _widgetLabel: 'Image',
-  imageChooseShape: 'Vorm',
-  imageCrop: 'Bijsnijden'
-});
+System.register([],(function(e){return{execute:function(){e({_widgetLabel:"Image",imageChooseShape:"Vorm",imageCrop:"Bijsnijden"})}}}));

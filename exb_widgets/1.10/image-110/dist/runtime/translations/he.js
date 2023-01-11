@@ -1,5 +1,1 @@
-define({
-  _widgetLabel: 'תמונה',
-  imageChooseShape: 'צורה',
-  imageCrop: 'חיתוך'
-});
+System.register([],(function(e){return{execute:function(){e({_widgetLabel:"תמונה",imageChooseShape:"צורה",imageCrop:"חיתוך"})}}}));
