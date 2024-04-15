@@ -1,4 +1,7 @@
 import { React, type AllWidgetProps } from 'jimu-core'
+/**
+ * This is the recommended way to import Calcite components.
+ */
 import { CalciteButton } from 'calcite-components'
 
 const Widget = (props: AllWidgetProps<unknown>) => {
