@@ -1,1 +1,1 @@
-This will not work until 1.15.
+These two widgets demo how to use Calcite components.
