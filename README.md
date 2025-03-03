@@ -1,3 +1,3 @@
 # www-host
 
-https://qlqllu.github.io/www-host/[widget manifest path]
+https://qlqllu.github.io/www-host/
